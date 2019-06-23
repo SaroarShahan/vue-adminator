@@ -29,7 +29,22 @@
     <div class="row mt-3">
       <div class="col-sm-12">
         <Box>
-          <LineChart :chartdata="chartDara" :options="chartOption"/>
+          <h4 class="h4 mb-3">Monthly Survey</h4>
+          <LineChart :chartdata="monthlySurvey" :options="chartOption"/>
+        </Box>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <Box>
+          <h4 class="h4 mb-3">Today's Income</h4>
+          <LineChart :chartdata="incomeData" :options="chartOption"/>
+        </Box>
+      </div>
+      <div class="col-md-6">
+        <Box>
+          <h4 class="h4 mb-3">This Week's Income</h4>
+          <BarChart :chartdata="incomeData" :options="barOption"/>
         </Box>
       </div>
     </div>
@@ -40,17 +55,21 @@
 import Box from '@/components/Box'
 import Card from '@/components/Card'
 import LineChart from '@/components/LineChart'
+import BarChart from '@/components/BarChart'
 export default {
   name: 'Dashboard',
   components: {
     Box,
     Card,
-    LineChart
+    LineChart,
+    BarChart
   },
   data() {
     return {
-      chartDara: null,
-      chartOption: {}
+      monthlySurvey: null,
+      incomeData: {},
+      chartOption: {},
+      barOption: {}
     }
   },
   created() {
@@ -58,7 +77,30 @@ export default {
   },
   methods: {
     fillData() {
-      this.chartDara = {
+      this.monthlySurvey = {
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July'
+        ],
+        datasets: [
+          {
+            label: 'Data One',
+            borderColor: '#39b982',
+            data: [20, 39, 20, 50, 39, 50, 40]
+          },
+          {
+            label: 'Data Two',
+            borderColor: '#39b982',
+            data: [10, 49, 25, 45, 39, 70, 40]
+          }
+        ]
+      }
+      this.incomeData = {
         labels: [
           'January',
           'February',
@@ -72,7 +114,20 @@ export default {
           {
             label: 'Data One',
             backgroundColor: '#39b982',
-            data: [40, 39, 20, 40, 39, 80, 40]
+            borderColor: '#39b982',
+            data: [20, 39, 20, 50, 30, 50, 30]
+          },
+          {
+            label: 'Data Two',
+            backgroundColor: '#535353',
+            borderColor: '#535353',
+            data: [10, 49, 35, 59, 39, 70, 40]
+          },
+          {
+            label: 'Data Three',
+            backgroundColor: '#8BB8D3',
+            borderColor: '#8BB8D3',
+            data: [25, 80, 55, 75, 49, 90, 40]
           }
         ]
       }
@@ -83,6 +138,26 @@ export default {
           display: false
         },
         height: 150
+      }
+      this.barOption = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        height: 150,
+        scales: {
+          xAxes: [
+            {
+              stacked: true
+            }
+          ],
+          yAxes: [
+            {
+              stacked: true
+            }
+          ]
+        }
       }
     }
   }
